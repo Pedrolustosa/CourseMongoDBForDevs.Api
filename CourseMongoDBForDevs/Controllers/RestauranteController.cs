@@ -75,5 +75,36 @@ namespace CourseMongoDBForDevs.Api.Controllers
                 }
             );
         }
+
+        [HttpGet("restaurante/{id}")]
+        public ActionResult ObterRestaurante(string id)
+        {
+            var restaurante = _restauranteRepository.ObterPorId(id);
+
+            if (restaurante == null)
+                return NotFound();
+
+            var exibicao = new RestauranteExibicao
+            {
+                Id = restaurante.Id,
+                Nome = restaurante.Nome,
+                Cozinha = (int)restaurante.Cozinha,
+                Endereco = new EnderecoExibicao
+                {
+                    Logradouro = restaurante.Endereco.Logradouro,
+                    Numero = restaurante.Endereco.Numero,
+                    Cidade = restaurante.Endereco.Cidade,
+                    Cep = restaurante.Endereco.CEP,
+                    UF = restaurante.Endereco.UF
+                }
+            };
+
+            return Ok(
+                new
+                {
+                    data = exibicao
+                }
+            );
+        }
     }
 }
