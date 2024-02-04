@@ -14,8 +14,6 @@ namespace CourseMongoDBForDevs.Api.Domain.ValueObjects
             CEP = cep;
         }
 
-        public Endereco() { }
-
         public string Logradouro { get; private set; }
         public string Numero { get; private set; }
         public string Cidade { get; private set; }
