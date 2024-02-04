@@ -1,9 +1,10 @@
-﻿using MongoDB.Driver;
+﻿using System.Linq;
+using MongoDB.Driver;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 using CourseMongoDBForDevs.Api.Data.Schemas;
 using CourseMongoDBForDevs.Api.Domain.Entities;
 using CourseMongoDBForDevs.Api.Domain.ValueObjects;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace CourseMongoDBForDevs.Api.Data.Repositories
 {
@@ -46,6 +47,14 @@ namespace CourseMongoDBForDevs.Api.Data.Repositories
                 restaurantes.Add(r);
             });
             return restaurantes;
+        }
+
+        public Restaurante ObterPorId(string id)
+        {
+            var document = _restaurantes.AsQueryable().FirstOrDefault(_ => _.Id == id);
+            if (document == null)
+                return null;
+            return document.ConverterParaDomain();
         }
     }
 
